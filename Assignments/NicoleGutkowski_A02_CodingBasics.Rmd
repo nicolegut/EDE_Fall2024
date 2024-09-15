@@ -140,7 +140,7 @@ myrecipe2 <- function(x){
 
 #12a. Run the first function with the value 52.5
 
-## myrecipe(52.5)
+myrecipe(52.5)
 
 #12b. Run the second function with the value 52.5
 
@@ -148,7 +148,7 @@ myrecipe2(52.5)
 
 #13a. Run the first function with the vector of test scores
 
-myrecipe(scores)
+##myrecipe(scores)
 
 #13b. Run the second function with the vector of test scores
 myrecipe2(scores)
