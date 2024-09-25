@@ -64,7 +64,10 @@ Litter <- read.csv(
 
 4.  How is litter and woody debris sampled as part of the NEON network? Read the NEON_Litterfall_UserGuide.pdf document to learn more. List three pieces of salient information about the sampling methods here:
 
-> Answer: 1. Mass data are measured separately for different types of litter and debris with an accuracy of 0.01 grams. 2.Sampling occurs at sites that have woody vegetation above 2 meters tall. 3. Ground traps are sampled once per year, and elevated trap sampling varies between biweekly, month, and bimonthly.
+> Answer: 
+1. Mass data are measured separately for different types of litter and debris with an accuracy of 0.01 grams. 
+2.Sampling occurs at sites that have woody vegetation above 2 meters tall. 
+3. Ground traps are sampled once per year, and elevated trap sampling varies between biweekly, month, and bimonthly.
 
 ## Obtain basic summaries of your data (Neonics)
 
@@ -93,7 +96,7 @@ summary(Neonics$Species.Common.Name, maxsum = 7)
 
 ```
 
-> Answer: The six most commonly studied species in the dataset are the Honey Bee, Parasistic Wasp, Buff Tailed Bumblebee, Carniolan Honey Bee, Bumble Bee, and Italian Honeybee. These species are all pollinators. They are of interest over other insects due to essential nature in plant growth. (FINISH!!)
+> Answer: The six most commonly studied species in the dataset are the Honey Bee, Parasistic Wasp, Buff Tailed Bumblebee, Carniolan Honey Bee, Bumble Bee, and Italian Honeybee. These species are all pollinators. They are of interest over other insects due to their essential nature in plant reproduction and growth.
 
 8.  Concentrations are always a numeric value. What is the class of `Conc.1..Author.` column in the dataset, and why is it not numeric? [Tip: Viewing the dataframe may be helpful...]
 
@@ -203,7 +206,7 @@ ggplot(Litter) +
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
 
-> Answer: A violin plot depends on differing data densities between our groups of interest. A boxplot can create visualizations with fewer data points, making it effective in our case.
+> Answer: A violin plot is most effective at showing the distribution and density of the data. However, because most of our data is clustered around very light masses, a boxplot is more effective in our case. Boxplots can provide a clear visualization of central tendency, without relying on data density.
 
 What type(s) of litter tend to have the highest biomass at these sites?
 
