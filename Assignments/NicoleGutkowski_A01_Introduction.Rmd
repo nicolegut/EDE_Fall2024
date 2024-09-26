@@ -22,11 +22,11 @@ Enter answers to the questions just below the >Answer: prompt.
 
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
-> Answer: I have used R semi-consistently during the last two years of my undergrad for internships and research projects. I have also taken a statistical programming class (the class was split between using SAS and R to do basic statistical analyses) and a graduate biostats course that used R.I have not used Git before.
+> Answer: I have used R semi-consistently for the past two years for internships and research projects. I have also taken a statistical programming class (the class was split between using SAS and R to do basic statistical analyses) and a graduate biostats course that used R. I have not used Git before.
 
 2. Are there any components of the course about which you feel confident?
 
-> Answer: I feel confident understanding and being able to perform basic analyses in R.
+> Answer: I feel confident in understanding and being able to perform basic analyses in R.
 
 3. Are there any components of the course about which you feel apprehensive?
 
