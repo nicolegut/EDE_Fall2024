@@ -38,6 +38,8 @@ dim(NTL.phys.data)
 class(NTL.phys.data$sampledate)
 # Format sampledate as date
 NTL.phys.data$sampledate <- as.Date(NTL.phys.data$sampledate, format = "%m/%d/%y")
+
+
 ```
 
 ## Data Wrangling
