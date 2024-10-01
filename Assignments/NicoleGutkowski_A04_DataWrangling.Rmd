@@ -131,8 +131,23 @@ EPApm19cols <-
 
 #5
 
+EPApm18cols$AQS_PARAMETER_DESC <- "PM2.5"
+
+EPApm19cols$AQS_PARAMETER_DESC <- "PM2.5"
+
+
 
 #6
+
+write.csv(EPAo318cols, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_O3_NC2018_Processed.csv")
+write.csv(EPAo319cols, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_O3_NC2019_Processed.csv")
+write.csv(EPApm18cols, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_PM25_NC2018_Processed.csv")
+write.csv(EPApm19cols, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_PM25_NC2019_Processed.csv")
+
 
 ```
 
@@ -167,17 +182,41 @@ EPApm19cols <-
 ```{r questions 7 thru 11}
 #7 
 
+EPAair1 <- rbind(EPAo318cols, EPAo319cols, EPApm18cols, EPApm19cols)
 
 #8 
 
+EPAair2 <- 
+EPAair1 %>% 
+  filter(Site.Name %in% c("Linville Falls", "Durham Armory", "Leggett", 
+                          "Hattie Avenue", "Clemmons Middle", 
+                          "Mendenhall School", "Frying Pan Mountain", 
+                          "West Johnston Co.", "Garinger High School", 
+                          "Castle Hayne", "Pitt Agri. Center", "Bryson City", 
+                          "Millbrook School")) %>% 
+  group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>%
+  summarise(meanAQI = mean(DAILY_AQI_VALUE), 
+            meanLat = mean(SITE_LATITUDE), 
+            meanLong = mean(SITE_LONGITUDE)) %>% 
+  mutate(Month = month(Date), Year = year(Date))
+  
+
 
 #9
+EPAair_wide <- pivot_wider(EPAair2, 
+                            names_from = AQS_PARAMETER_DESC, 
+                            values_from = meanAQI)
 
 
 #10
 
+dim(EPAair_wide)
+
 
 #11
+
+write.csv(EPAair_wide, row.names = FALSE, 
+          file ="./Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
 
 
 ```
@@ -193,14 +232,22 @@ EPApm19cols <-
 
 #12
 
+EPAair_summary <- 
+  EPAair_wide %>%
+  group_by(Site.Name, Month, Year) %>%
+  summarise(meanO3 = mean(Ozone), 
+            meanPM = mean(PM2.5)) %>% 
+  drop_na(meanO3)
+  
+
 
 #13
 
-
+dim(EPAair_summary)
 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`? Hint: replace `drop_na` with `na.omit` in part 12 and observe what happens with the dimensions of the summary date frame.
 
-> Answer: 
+> Answer: Using `na.omit` would remove `na`'s from any column of the dataframe. However, by using drop_na, only the `na`'s from the ozone column were dropped
 
