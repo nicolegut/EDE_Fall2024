@@ -82,6 +82,12 @@ EPAo319$Date <- as.Date(EPAo319$Date, format = "%m/%d/%Y")
 EPApm18$Date <- as.Date(EPApm18$Date, format = "%m/%d/%Y")
 EPApm19$Date <- as.Date(EPApm19$Date, format = "%m/%d/%Y")
 
+head(EPAo318)
+head(EPAo319)
+head(EPApm18)
+head(EPApm19)
+
+
 #4
 EPAo318cols <- 
   EPAo318 %>% 
@@ -93,7 +99,7 @@ EPAo318cols <-
     COUNTY, 
     SITE_LATITUDE, 
     SITE_LONGITUDE)
-EPAo318cols
+head(EPAo318cols)
 
 EPAo319cols <- 
   EPAo319 %>% 
@@ -105,7 +111,7 @@ EPAo319cols <-
     COUNTY, 
     SITE_LATITUDE, 
     SITE_LONGITUDE)
-EPAo319cols
+head(EPAo319cols)
 
 EPApm18cols <- 
   EPApm18 %>% 
@@ -117,7 +123,7 @@ EPApm18cols <-
     COUNTY, 
     SITE_LATITUDE, 
     SITE_LONGITUDE)
-EPApm18cols
+head(EPApm18cols)
 
 EPApm19cols <- 
   EPApm19 %>% 
@@ -129,15 +135,15 @@ EPApm19cols <-
     COUNTY, 
     SITE_LATITUDE, 
     SITE_LONGITUDE)
-EPApm19cols
+head(EPApm19cols)
 
 #5
 
 EPApm18cols$AQS_PARAMETER_DESC <- "PM2.5"
-EPApm18cols
+head(EPApm18cols)
 
 EPApm19cols$AQS_PARAMETER_DESC <- "PM2.5"
-EPApm19cols
+head(EPApm19cols)
 
 
 
@@ -184,7 +190,7 @@ write.csv(EPApm19cols, row.names = FALSE,
 #7 
 
 EPAair1 <- rbind(EPAo318cols, EPAo319cols, EPApm18cols, EPApm19cols)
-EPAair1
+head(EPAair1)
 
 #8 
 
@@ -201,14 +207,14 @@ EPAair1 %>%
             meanLat = mean(SITE_LATITUDE), 
             meanLong = mean(SITE_LONGITUDE)) %>% 
   mutate(Month = month(Date), Year = year(Date))
-EPAair2
+head(EPAair2)
 
 
 #9
 EPAair_wide <- pivot_wider(EPAair2, 
                             names_from = AQS_PARAMETER_DESC, 
                             values_from = meanAQI)
-EPAair_wide
+head(EPAair_wide)
 
 #10
 
@@ -239,7 +245,7 @@ EPAair_summary <-
   summarise(meanO3 = mean(Ozone), 
             meanPM = mean(PM2.5)) %>% 
   drop_na(meanO3)
-EPAair_summary 
+head(EPAair_summary) 
 
 
 #13
