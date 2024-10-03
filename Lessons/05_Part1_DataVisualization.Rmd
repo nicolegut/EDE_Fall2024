@@ -87,7 +87,8 @@ print(O3plot)
 
 # Fix this code
 O3plot2 <- ggplot(EPAair) +
-  geom_point(aes(x = Date, y = Ozone, color = "blue"))
+  #geom_point(aes(x = Date, y = Ozone, color = "blue"))
+  geom_point(aes(x = Date, y = Ozone), color = "blue")
 print(O3plot2)
 
 # Add additional variables
@@ -173,8 +174,8 @@ print(Nutrientplot3)
 # Dot plot
 Nutrientplot4 <-
   ggplot(PeterPaul.chem.nutrients.gathered, aes(x = lakename, y = concentration)) +
-  geom_dotplot(aes(color = nutrient, fill = nutrient), binaxis = "y", binwidth = 1, 
-               stackdir = "center", position = "dodge", dotsize = 2) #
+  geom_dotplot(aes(color = nutrient, fill = nutrient), binaxis = "y", binwidth = 1, #stacking observations over y
+               stackdir = "center", position = "dodge", dotsize = 2) #stacking points in the center/ dots at the same conc will go to the side --> dodge
 print(Nutrientplot4)
 
 # Violin plot
