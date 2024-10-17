@@ -170,7 +170,7 @@ plot5_tp <- lake_chem_proc %>%
   )
 print(plot5_tp)
 
-season_vars <- plot_grid(plot5_temp, plot5_tn, plot5_tp, nrow = 3, align = 'h')
+season_vars <- plot_grid(plot5_temp, plot5_tn, plot5_tp, nrow = 3, ncol = 1, align = "hv", rel_height = c(1,1,1.5))
 print(season_vars)
 
 
