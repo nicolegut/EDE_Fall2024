@@ -67,7 +67,7 @@ Temp_BR_processed <-
   Temp_BR %>% 
   rename( Temperature_C = Temperature....Celsius.) %>% 
   separate(Statistics,c("Null","Month","Null2")," ") %>% 
-  mutate( Date = my(paste0(Month,"-",Year))) %>% 
+  mutate( Date = my(paste(Month,"-",Year))) %>% 
   select(Date,Temperature_C)  
 
 
