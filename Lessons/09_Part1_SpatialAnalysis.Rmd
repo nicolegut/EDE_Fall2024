@@ -142,11 +142,11 @@ EPAair.sf <- EPAair.sites %>%
     )
 
 #Save locally as a shapefile 
-st_write(
-  EPAair.sf,
-  here("./Data/Processed/EPAair_sites.shp"),
-  driver='ESRI Shapefile'
-  )
+#st_write(
+#  EPAair.sf,
+#  here("./Data/Processed/EPAair_sites.shp"),
+#  driver='ESRI Shapefile'
+#  )
 
 #View the sf object using the methods above...
 mapview(EPAair.sf, cex = 'mean_PM25') #cex = size

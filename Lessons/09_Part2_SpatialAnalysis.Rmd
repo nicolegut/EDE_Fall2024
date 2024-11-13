@@ -120,6 +120,7 @@ huc8_sf <- st_read(here('Data/Spatial/NCHUC8.shp'))
   
 #Reveal the column names
 colnames(huc8_sf)
+glimpse(huc8_sf)
 
 #Check the CRS
 st_crs(counties_sf)
@@ -141,8 +142,12 @@ huc8_sf2 <- st_read(here('Data/Spatial/NCHUC8.shp')) %>%
   filter(SUBBASIN == 'Upper Neuse')
 
 #Create a map
-mapview(huc8_sf2)
+mapview(huc8_sf, col.region = "grey")+
+  mapview(huc8_sf2, col.region = "yellow", color = "blue")
 
+ggplot()+
+  geom_sf(data = huc8_sf, fill = "grey")+
+  geom_sf(data = huc8_sf2, fill = "yellow", color = "blue")
 
 ```
 
@@ -193,6 +198,7 @@ counties_sf_join <-  merge(
 # -or-
 
 #Tidyverse version of the join
+#left join drops all values in svi2020_nc_raw that don't have a match in counties_sf
 counties_sf_join <- counties_sf %>% 
   left_join(
     svi2020_nc_raw, 
@@ -220,33 +226,39 @@ ggplot() +
 
 ```{r}
 #Import data, setting HUC_12 to be factors, and computing a HUC_8 column
-
-huc_nc_raw <- read.csv('https://raw.githubusercontent.com/ENV859/EnviroAtlasData/main/Wind_Energy.csv',
+wind_df <- read.csv(
+  'https://raw.githubusercontent.com/ENV859/EnviroAtlasData/main/Wind_Energy.csv',
   colClasses = c('HUC_12' = 'factor')) %>% 
-  mutate(HUC_8 = substr(huc_nc_raw$HUC_12, 1,8)) 
+  mutate(HUC_8 = substr(huc_nc_raw$HUC_12, 1,8)) %>% 
+  group_by(HUC_8) %>% 
+  summarise(
+    wind = sum(AvgWindEnergy)
+  )
+
+
   
 #Join to HUC_8 features
-HUC_8_join <-  merge(
-  x = huc_nc_raw,
+#HUC_8_wind <-  merge(
+  x = wind_df,
   y = huc8_sf2, 
   by.x = "HUC_8",
   by.y = "HUC_8" 
   )
 
 
+HUC_8_wind <- huc8_sf %>% 
+  left_join(
+    wind_df
+    )
+
+
 #View the outputs
-mapview(HUC_8_join, 
-        zcol = 'AvgWindEnergy', 
-        col.regions = brewer.pal(2, 'RdBu')) + 
-  mapview(huc_nc_raw, cex = 'maxPM')
+mapview(HUC_8_wind, zcol = "wind")
   
 
 #view with ggplot
-ggplot() + 
-  geom_sf(data=counties_sf_join,aes(fill = RPL_THEME1),alpha=0.5) + 
-  scale_fill_gradient2(low="red",high="blue",midpoint = 0.5) + 
-  geom_sf(data=epa_pm25_sites_sf) +
-  labs(fill='Socio\nEcononomic\nIndex')
+ggplot()+
+  geom_sf(data = HUC_8_wind, aes(fill(wind)))
 
 ```
 
@@ -270,14 +282,18 @@ mapview(state_sf)
 
 ```{r Aggregate the HUC data on an attribute, saving as huc2_sf}
 #List the unique values in the DWQ_Basin field
-
+unique(huc8_sf$DWQ_Basin)
 
 #Summarize on DWQ Basin value
-huc2_sf <- 
+huc2_sf <- huc8_sf %>% 
+  group_by(DWQ_Basin) %>% 
+  summarize(
+    ACRES = sum(ACRES)
+  )
   
 
 #Map the data
-
+mapview(huc2_sf, zcol = 'ACRES')
 
 ```
 
@@ -360,11 +376,15 @@ triCo <- counties_sf_utm %>%
 
   
 #Grab the intersecting HUC_8s
-
+intersect_p2 <- huc8_sf %>%  
+  st_filter(triCo)
 
 
 #Intersect the HUC_8s
+mapview(intersect_p2, alpha.regions = 0, color='red')
 
+#Actually intersect the counties (not just select those that intersect)
+neuse_counties_sf <- neuse_sf %>% st_intersection(counties_sf_utm)
 
 ```
 
